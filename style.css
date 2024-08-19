@@ -19,14 +19,14 @@ body{
     transform: rotateZ(-5deg);
     box-shadow: 1px 15px 20px 0px rgba(0,0,0,0.5) ;
 }
-.paper.heart{
+.heart{
     position: relative;
     width: 200px;
     height: 200px;
     padding: 0;
     border-radius: 50%;
 }
-.paper.heart::after{
+.heart::after{
     content: '';
     background-image: url('https://cdn.pixabay.com/photo/2016/03/31/19/25/cartoon-1294994__340.png');
     width: 100%;
