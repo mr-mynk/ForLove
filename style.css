@@ -57,4 +57,5 @@ p{
     color: rgb(0,0,100);
     opacity: 0.75;
     user-select: none;
+    text-wrap: nowrap;
 }
