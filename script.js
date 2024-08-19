@@ -1,60 +1,46 @@
-let highZ = 1;
+const draggableElements = document.querySelectorAll(".paper");
 
-class Paper {
+draggableElements.forEach((elem) => {
+  let initialX, initialY, currentX, currentY;
+  let isDragging = false;
 
-    paperholding = false;
-    preMouseX = 0;
-    preMouseY = 0;
-    mouseX = 0;
-    mouseY = 0;
-    velocityX = 0;
-    velocityY = 0;
-    currentPaperX = 0;
-    currentPaperY = 0;
+  // Mouse events
+  elem.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    initialX = e.clientX - elem.offsetLeft;
+    initialY = e.clientY - elem.offsetTop;
+  });
 
-    init(paper){
-        paper.addEventListener('mousedown', (e) =>{
-
-            this.paperholding = true;
-            paper.style.zIndex = highZ;
-            highZ+=1;
-            
-            if(e.button === 0){
-
-                this.preMouseX=this.mouseX;
-                this.preMouseY=this.mouseY;
-            }
-        });
-
-        document.addEventListener('mousemove', (e) =>{
-            
-            this.mouseX=e.clientX;
-            this.mouseY=e.clientY;
-
-            this.velocityX = this.mouseX-this.preMouseX;
-            this.velocityY = this.mouseY-this.preMouseY;
-
-            if(this.paperholding){
-                this.currentPaperX+=this.velocityX;
-                this.currentPaperY+=this.velocityY;
-
-                this.preMouseX=this.mouseX;
-                this.preMouseY=this.mouseY;
- 
-                paper.style.transform=`translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px)`;
-            }
-
-        })
-        
-        window.addEventListener('mouseup', (e) =>{
-            this.paperholding=false;
-        })
+  document.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+      currentX = e.clientX - initialX;
+      currentY = e.clientY - initialY;
+      elem.style.left = currentX + "px";
+      elem.style.top = currentY + "px";
     }
-}
+  });
 
-const papers = Array.from(document.querySelectorAll('.paper'));
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
 
-papers.forEach(paper => {
-    const p = new Paper();
-    p.init(paper);
+  // Touch events
+  elem.addEventListener("touchstart", (e) => {
+    isDragging = true;
+    initialX = e.touches[0].clientX - elem.offsetLeft;
+    initialY = e.touches[0].clientY - elem.offsetTop;
+  });
+
+  document.addEventListener("touchmove", (e) => {
+    if (isDragging) {
+      currentX = e.touches[0].clientX - initialX;
+      currentY = e.touches[0].clientY - initialY;
+      elem.style.left = currentX + "px";
+      elem.style.top = currentY + "px";
+    }
+  });
+
+  document.addEventListener("touchend", () => {
+    isDragging = false;
+  });
 });
